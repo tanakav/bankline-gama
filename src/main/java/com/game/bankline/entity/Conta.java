@@ -10,9 +10,19 @@ import javax.persistence.Table;
 @Table(name="tb_conta")
 public class Conta {
 	
+private String descricao;	
+	
+	
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+	
+	private String numero;	
+
+	private Double saldo;
+	
+	private TipoContaEnum tipo;
 	
 	public Integer getId() {
 		return id;
@@ -46,20 +56,12 @@ public class Conta {
 		this.saldo = saldo;
 	}
 
-	public String getTipo() {
+	public TipoContaEnum getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(String tipo) {
+	public void setTipo(TipoContaEnum tipo) {
 		this.tipo = tipo;
 	}
-
-	private String descricao;	
-	
-	private String numero;
-	
-	private Double saldo;
-	
-	private String tipo;
 
 }

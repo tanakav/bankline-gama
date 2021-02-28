@@ -22,7 +22,11 @@ public class Lancamento {
 	
 	private Date data;
 	
-	private String descricao;	
+	private String descricao;
+
+	private TipoLancamentoEnum tipo;
+	
+	private Double valor;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_plano_conta")
@@ -68,14 +72,6 @@ public class Lancamento {
 		this.planoConta = planoConta;
 	}
 
-	public String getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-
 	public Double getValor() {
 		return valor;
 	}
@@ -83,9 +79,13 @@ public class Lancamento {
 	public void setValor(Double valor) {
 		this.valor = valor;
 	}
-
-	private String tipo;
 	
-	private Double valor;
+	public TipoLancamentoEnum getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(TipoLancamentoEnum tipo) {
+		this.tipo = tipo;
+	}
 
 }
