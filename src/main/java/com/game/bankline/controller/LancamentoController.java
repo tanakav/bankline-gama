@@ -36,7 +36,7 @@ public class LancamentoController {
 	}
 	
 	@GetMapping("/planos-conta/{login}") 
-	public List<PlanoConta> listarPlanosConta(@PathVariable(value="id") String login ){
-		return planoContaRepository.findAll();
+	public List<PlanoConta> listarPlanosConta(@PathVariable(value="login") String login ){
+		return planoContaRepository.findByLogin(login);
 	}
 }
