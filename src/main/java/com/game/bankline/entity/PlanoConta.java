@@ -21,7 +21,7 @@ public class PlanoConta {
 	
 	private boolean padrao;
 	
-	private TipoPlanoContaEnum tipoMovimento;
+	private Integer tipoMovimento;
 	
 
 	public Integer getId() {
@@ -57,11 +57,11 @@ public class PlanoConta {
 	}
 
 	public TipoPlanoContaEnum getTipoMovimento() {
-		return tipoMovimento;
+		return TipoPlanoContaEnum.toEnum(tipoMovimento);
 	}
 
 	public void setTipoMovimento(TipoPlanoContaEnum tipoMovimento) {
-		this.tipoMovimento = tipoMovimento;
+		this.tipoMovimento = tipoMovimento.getId();
 	}
 	
 	
