@@ -24,7 +24,7 @@ public class Lancamento {
 	
 	private String descricao;
 
-	private TipoLancamentoEnum tipo;
+	private Integer tipo;
 	
 	private Double valor;
 	
@@ -81,11 +81,11 @@ public class Lancamento {
 	}
 	
 	public TipoLancamentoEnum getTipo() {
-		return tipo;
+		return TipoLancamentoEnum.toEnum(tipo);
 	}
 
 	public void setTipo(TipoLancamentoEnum tipo) {
-		this.tipo = tipo;
+		this.tipo = tipo.getId();
 	}
 
 }

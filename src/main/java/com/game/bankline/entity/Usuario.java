@@ -4,6 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.br.CPF;
 
 @Entity
 public class Usuario{
@@ -12,12 +15,16 @@ public class Usuario{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;	
 	
+	@NotNull
 	private String cpf;
 	
+	@NotNull
 	private String nome;
 	
+	@NotNull
 	private String login;
 	
+	@NotNull
 	private String senha;
 	
 	public Usuario() {}	

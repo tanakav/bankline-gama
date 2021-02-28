@@ -6,24 +6,36 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="tb_conta")
 public class Conta {
-	
-private String descricao;	
-	
-	
-	
+
+	private String descricao;	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@JsonIgnore
 	private Integer id;
-	
+
 	private String numero;	
 
 	private Double saldo;
+
+	private Integer tipo;
 	
-	private TipoContaEnum tipo;
-	
+	public Conta() {}	
+
+	public Conta(Integer id, String descricao, String numero, Double saldo, TipoContaEnum tipo) {
+		super();
+		this.descricao = descricao;
+		this.id = id;
+		this.numero = numero;
+		this.saldo = saldo;
+		this.tipo = tipo.getId();
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -57,11 +69,36 @@ private String descricao;
 	}
 
 	public TipoContaEnum getTipo() {
-		return tipo;
+		return TipoContaEnum.toEnum(tipo);
 	}
 
 	public void setTipo(TipoContaEnum tipo) {
-		this.tipo = tipo;
+		this.tipo = tipo.getId();
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Conta other = (Conta) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}	
 
 }
