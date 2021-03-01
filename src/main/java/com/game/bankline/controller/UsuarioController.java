@@ -2,6 +2,7 @@ package com.game.bankline.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,14 +14,20 @@ import com.game.bankline.dto.UsuarioDto;
 import com.game.bankline.entity.Usuario;
 import com.game.bankline.service.UsuarioService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/usuarios")
+@CrossOrigin(origins="*")
+@Api(value="Usuario API REST")
 public class UsuarioController {
 	
 	@Autowired
 	private UsuarioService usuarioService;
 	
 	@GetMapping("{id}")
+	@ApiOperation(value="Retorna o usuário pelo ID")
 	public ResponseEntity<UsuarioDto> buscarUsuario(@PathVariable Integer id){
 		UsuarioDto responseData = new UsuarioDto();
         
