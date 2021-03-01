@@ -6,6 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.game.bankline.entity.enums.TipoMovimento;
+
 @Entity
 @Table(name="tb_plano_conta")
 public class PlanoConta {
@@ -56,14 +58,12 @@ public class PlanoConta {
 		this.padrao = padrao;
 	}
 
-	public TipoPlanoContaEnum getTipoMovimento() {
-		return TipoPlanoContaEnum.toEnum(tipoMovimento);
+	public TipoMovimento getTipoMovimento() {
+		return TipoMovimento.toEnum(tipoMovimento);
 	}
 
-	public void setTipoMovimento(TipoPlanoContaEnum tipoMovimento) {
+	public void setTipoMovimento(TipoMovimento tipoMovimento) {
 		this.tipoMovimento = tipoMovimento.getId();
-	}
-	
-	
+	}	
 
 }

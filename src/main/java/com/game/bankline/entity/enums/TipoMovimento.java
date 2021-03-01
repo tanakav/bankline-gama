@@ -1,14 +1,14 @@
-package com.game.bankline.entity;
+package com.game.bankline.entity.enums;
 
-public enum TipoPlanoContaEnum {
-	RECEITA(1,"Receita"),
+public enum TipoMovimento {
+	RECEITA(1, "Receita"),
 	DESPESA(2,"Despesa"),
 	TRANSFERENCIA(3,"Transferencia");
 	
 	private Integer id;
-	private String descricao;
-	
-	private TipoPlanoContaEnum(Integer id, String descricao) {
+	private String descricao;	
+
+	private TipoMovimento(Integer id, String descricao) {
 		this.id = id;
 		this.descricao = descricao;
 	}	
@@ -21,12 +21,12 @@ public enum TipoPlanoContaEnum {
 		return descricao;
 	}
 
-	public static TipoPlanoContaEnum toEnum(Integer id){
+	public static TipoMovimento toEnum(Integer id){
         if(id == null){
             return null;
         }
 
-        for(TipoPlanoContaEnum tipo : TipoPlanoContaEnum.values()){
+        for(TipoMovimento tipo : TipoMovimento.values()){
             if(id.equals(tipo.getId())){
                 return tipo;
             }
@@ -34,4 +34,5 @@ public enum TipoPlanoContaEnum {
 
         throw new IllegalArgumentException("ID inválido: "+ id);
     }   
+
 }

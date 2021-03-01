@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.game.bankline.entity.enums.TipoContaEnum;
 
 @Entity
 @Table(name="tb_conta")
@@ -15,15 +15,14 @@ public class Conta {
 	private String descricao;	
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@JsonIgnore
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	private String numero;	
 
 	private Double saldo;
 
-	private Integer tipo;
+	private Integer tipoMovimento;
 	
 	public Conta() {}	
 
@@ -33,7 +32,7 @@ public class Conta {
 		this.id = id;
 		this.numero = numero;
 		this.saldo = saldo;
-		this.tipo = tipo.getId();
+		this.tipoMovimento = tipo.getId();
 	}
 
 	public Integer getId() {
@@ -69,11 +68,11 @@ public class Conta {
 	}
 
 	public TipoContaEnum getTipo() {
-		return TipoContaEnum.toEnum(tipo);
+		return TipoContaEnum.toEnum(tipoMovimento);
 	}
 
 	public void setTipo(TipoContaEnum tipo) {
-		this.tipo = tipo.getId();
+		this.tipoMovimento = tipo.getId();
 	}
 
 	@Override
