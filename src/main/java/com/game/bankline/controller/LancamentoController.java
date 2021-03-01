@@ -41,7 +41,7 @@ public class LancamentoController {
 		
 		lancamentoService.salvarLancamento(lancamentoRequest);
 		
-		return ResponseEntity.ok().body("Lancamento efetuado com sucesso");
+		return ResponseEntity.status(201).body("Lancamento efetuado com sucesso");
 		
 	}
 	

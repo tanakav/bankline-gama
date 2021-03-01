@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.game.bankline.dto.UsuarioDto;
 import com.game.bankline.entity.Conta;
 import com.game.bankline.entity.Usuario;
-import com.game.bankline.entity.enums.TipoContaEnum;
+import com.game.bankline.entity.enums.TipoConta;
 import com.game.bankline.exceptions.DuplicateKeyException;
 import com.game.bankline.exceptions.ObjectNotFoundException;
 import com.game.bankline.exceptions.RequiredFieldsException;
@@ -49,8 +49,8 @@ public class UsuarioService {
         	novoUsuario.setLogin(usuarioCriado.getLogin());
         	novoUsuario.setNome(usuarioCriado.getNome());
         	
-        	Conta contaCredito = new Conta(null,"Conta Credito",usuario.getLogin(),0.0,TipoContaEnum.CREDITO);
-        	Conta contaDebito = new Conta(null,"Conta Debito",usuario.getLogin(),0.0,TipoContaEnum.DEBITO);
+        	Conta contaCredito = new Conta(null,"Conta Credito",usuario.getLogin(),0.0,TipoConta.CREDITO);
+        	Conta contaDebito = new Conta(null,"Conta Debito",usuario.getLogin(),0.0,TipoConta.DEBITO);
         	
         	contaRepository.saveAll(Arrays.asList(contaCredito,contaDebito));   	
         	

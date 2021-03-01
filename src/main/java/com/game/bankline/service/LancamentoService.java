@@ -26,20 +26,16 @@ public class LancamentoService {
 	public void salvarLancamento(LancamentoDto lancamentoRequest) {
 		Lancamento lancamento = new Lancamento();
 		
-		if(contaRepository.findById(lancamentoRequest.getConta()).isPresent()) {
-			lancamento.setConta(lancamentoRequest.getConta());
-			lancamento.setData(lancamentoRequest.getData());
-			lancamento.setDescricao(lancamentoRequest.getDescricao());
-			PlanoConta planoConta = getPlanoConta(lancamentoRequest.getTipoPlanoConta());
-			lancamento.setPlanoConta(planoConta);
-			lancamento.setTipo(planoConta.getTipoMovimento());
-			lancamento.setValor(lancamentoRequest.getValor());
-			
-			lancamentoRepository.save(lancamento);		
-			
-		}else {
-			throw new ObjectNotFoundException("Conta de id "+lancamentoRequest.getConta()+" nao encontrada");
-		}
+		lancamento.setConta(lancamentoRequest.getConta());
+		lancamento.setData(lancamentoRequest.getData());
+		lancamento.setDescricao(lancamentoRequest.getDescricao());
+		PlanoConta planoConta = getPlanoConta(lancamentoRequest.getTipoPlanoConta());
+		lancamento.setPlanoConta(planoConta);
+		lancamento.setTipo(planoConta.getTipoMovimento());
+		lancamento.setValor(lancamentoRequest.getValor());
+		
+		lancamentoRepository.save(lancamento);	
+
 	}
 	
 	private PlanoConta getPlanoConta(Integer id) {
