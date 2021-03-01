@@ -10,7 +10,7 @@ import com.game.bankline.dto.ContaDto;
 import com.game.bankline.dto.DashboardDto;
 import com.game.bankline.entity.Conta;
 import com.game.bankline.entity.Lancamento;
-import com.game.bankline.entity.enums.TipoContaEnum;
+import com.game.bankline.entity.enums.TipoConta;
 import com.game.bankline.exceptions.ObjectNotFoundException;
 import com.game.bankline.repository.ContaRepository;
 import com.game.bankline.repository.LancamentoRepository;
@@ -21,33 +21,40 @@ public class DashboardService {
 	@Autowired
 	private LancamentoRepository lancamentoRepository;
 	
-	@Autowired ContaRepository contaRepository;
+	@Autowired 
+	private ContaRepository contaRepository;
 	
-	public DashboardDto getLancamentosDaConta(Integer numeroDaConta, Date dataInicial, Date dataFinal) {
+	public DashboardDto getLancamentosDaConta(String numeroDaConta, Date dataInicial, Date dataFinal) {
 		DashboardDto dashboardDto = new DashboardDto();
 		
-		if(contaRepository.findById(numeroDaConta).isPresent()) {
-			ContaDto contaDebito = getLancamentoDaConta(numeroDaConta,TipoContaEnum.DEBITO.getId());
+		if(contaRepository.findAllByNumero(numeroDaConta).isEmpty()) {
 			
-			
-			
+			throw new ObjectNotFoundException("Conta de numero "+numeroDaConta+" nao encontrada");			
 			
 		}else {
-			throw new ObjectNotFoundException("Conta de id "+numeroDaConta+" nao encontrada");
+			
+			Conta contaDebito = contaRepository.
+					findByNumeroAndTipoConta(numeroDaConta, TipoConta.DEBITO.getId()).get();
+			Conta contaCredito = contaRepository.
+					findByNumeroAndTipoConta(numeroDaConta, TipoConta.CREDITO.getId()).get();
+			
+			dashboardDto.setContaDebito(getLancamentosDaConta(contaDebito));
+			dashboardDto.setContaCredito(getLancamentosDaConta(contaCredito));			
 		}
 		
 		return dashboardDto;
 	}
 	
-	public ContaDto getLancamentoDaConta(Integer numeroDaConta,Integer tipoDeConta) {
-		ContaDto returnedContaDto = new ContaDto();
-		Conta conta = contaRepository.findById(numeroDaConta).get();
-		List<Lancamento> lancamentos = lancamentoRepository.findAllByConta(numeroDaConta);
+	public ContaDto getLancamentosDaConta(Conta conta) {
+		ContaDto contaDto = new ContaDto();
+		List<Lancamento> lancamentos = lancamentoRepository.findAllByConta(conta.getId());
 		
-		returnedContaDto.setNumero(conta.getId());
-		returnedContaDto.setTipo(conta.getTipo().getDescricao());
+		contaDto.setNumero(conta.getId());
+		contaDto.setTipo(conta.getTipo().getDescricao());
+		contaDto.setSaldo(conta.getSaldo());
+		contaDto.setLancamentos(lancamentos);
 		
-		return returnedContaDto;		
+		return contaDto;		
 	}
 
 }

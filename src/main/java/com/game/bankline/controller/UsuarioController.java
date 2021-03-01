@@ -42,7 +42,7 @@ public class UsuarioController {
 		
 		responseData = usuarioService.createUsuario(usuario);
 		
-		return ResponseEntity.ok().body(responseData);
+		return ResponseEntity.status(201).body(responseData);
 	}
 
 }

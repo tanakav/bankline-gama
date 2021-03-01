@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.game.bankline.entity.enums.TipoContaEnum;
+import com.game.bankline.entity.enums.TipoConta;
 
 @Entity
 @Table(name="tb_conta")
@@ -22,17 +22,17 @@ public class Conta {
 
 	private Double saldo;
 
-	private Integer tipoMovimento;
+	private Integer tipoConta;
 	
 	public Conta() {}	
 
-	public Conta(Integer id, String descricao, String numero, Double saldo, TipoContaEnum tipo) {
+	public Conta(Integer id, String descricao, String numero, Double saldo, TipoConta tipo) {
 		super();
 		this.descricao = descricao;
 		this.id = id;
 		this.numero = numero;
 		this.saldo = saldo;
-		this.tipoMovimento = tipo.getId();
+		this.tipoConta = tipo.getId();
 	}
 
 	public Integer getId() {
@@ -67,12 +67,12 @@ public class Conta {
 		this.saldo = saldo;
 	}
 
-	public TipoContaEnum getTipo() {
-		return TipoContaEnum.toEnum(tipoMovimento);
+	public TipoConta getTipo() {
+		return TipoConta.toEnum(tipoConta);
 	}
 
-	public void setTipo(TipoContaEnum tipo) {
-		this.tipoMovimento = tipo.getId();
+	public void setTipo(TipoConta tipo) {
+		this.tipoConta = tipo.getId();
 	}
 
 	@Override

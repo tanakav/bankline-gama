@@ -1,13 +1,13 @@
 package com.game.bankline.entity.enums;
 
-public enum TipoContaEnum {
+public enum TipoConta {
 	DEBITO(1,"Debito"),
 	CREDITO(2,"Credito");
 	
 	private Integer id;
 	private String descricao;
 	
-	private TipoContaEnum(Integer id, String descricao) {
+	private TipoConta(Integer id, String descricao) {
 		this.id = id;
 		this.descricao = descricao;
 	}
@@ -20,12 +20,12 @@ public enum TipoContaEnum {
 		return descricao;
 	}
 	
-	public static TipoContaEnum toEnum(Integer id){
+	public static TipoConta toEnum(Integer id){
         if(id == null){
             return null;
         }
 
-        for(TipoContaEnum tipo : TipoContaEnum.values()){
+        for(TipoConta tipo : TipoConta.values()){
             if(id.equals(tipo.getId())){
                 return tipo;
             }

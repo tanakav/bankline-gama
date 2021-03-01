@@ -8,11 +8,12 @@ public class ContaDto {
 	
 	private Integer numero;
 	private String tipo;
+	private Double saldo;
 	private List<Lancamento> lancamentos;
 	
 	public ContaDto() {}
 	
-	public ContaDto(Integer numero, String tipo, List<Lancamento> lancamentos) {
+	public ContaDto(Integer numero, String tipo, Double saldo, List<Lancamento> lancamentos) {
 		super();
 		this.numero = numero;
 		this.tipo = tipo;
@@ -41,6 +42,14 @@ public class ContaDto {
 
 	public void setLancamentos(List<Lancamento> lancamentos) {
 		this.lancamentos = lancamentos;
+	}
+
+	public Double getSaldo() {
+		return saldo;
+	}
+
+	public void setSaldo(Double saldo) {
+		this.saldo = saldo;
 	}
 	
 	
