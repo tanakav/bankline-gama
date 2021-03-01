@@ -38,16 +38,17 @@ public class DashboardService {
 			Conta contaCredito = contaRepository.
 					findByNumeroAndTipoConta(numeroDaConta, TipoConta.CREDITO.getId()).get();
 			
-			dashboardDto.setContaDebito(getLancamentosDaConta(contaDebito));
-			dashboardDto.setContaCredito(getLancamentosDaConta(contaCredito));			
+			dashboardDto.setContaDebito(getLancamentosDaConta(contaDebito,dataInicial,dataFinal));
+			dashboardDto.setContaCredito(getLancamentosDaConta(contaCredito,dataInicial,dataFinal));			
 		}
 		
 		return dashboardDto;
 	}
 	
-	public ContaDto getLancamentosDaConta(Conta conta) {
+	public ContaDto getLancamentosDaConta(Conta conta, Date dataInicial, Date dataFinal) {
 		ContaDto contaDto = new ContaDto();
-		List<Lancamento> lancamentos = lancamentoRepository.findAllByConta(conta.getId());
+		List<Lancamento> lancamentos = lancamentoRepository
+				.findAllByContaAndDataBetween(conta.getId(),dataInicial,dataFinal);
 		
 		contaDto.setNumero(conta.getId());
 		contaDto.setTipo(conta.getTipo().getDescricao());
