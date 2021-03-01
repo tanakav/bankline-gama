@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.game.bankline.entity.enums.TipoMovimento;
+
 @Entity
 @Table(name="tb_lancamento")
 public class Lancamento {
@@ -24,7 +26,7 @@ public class Lancamento {
 	
 	private String descricao;
 
-	private Integer tipo;
+	private Integer tipoMovimento;
 	
 	private Double valor;
 	
@@ -80,12 +82,12 @@ public class Lancamento {
 		this.valor = valor;
 	}
 	
-	public TipoLancamentoEnum getTipo() {
-		return TipoLancamentoEnum.toEnum(tipo);
+	public TipoMovimento getTipo() {
+		return TipoMovimento.toEnum(tipoMovimento);
 	}
 
-	public void setTipo(TipoLancamentoEnum tipo) {
-		this.tipo = tipo.getId();
+	public void setTipo(TipoMovimento tipo) {
+		this.tipoMovimento = tipo.getId();
 	}
 
 }

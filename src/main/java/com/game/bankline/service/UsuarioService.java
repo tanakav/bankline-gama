@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.game.bankline.dto.UsuarioDto;
 import com.game.bankline.entity.Conta;
-import com.game.bankline.entity.TipoContaEnum;
 import com.game.bankline.entity.Usuario;
+import com.game.bankline.entity.enums.TipoContaEnum;
 import com.game.bankline.exceptions.DuplicateKeyException;
 import com.game.bankline.exceptions.ObjectNotFoundException;
 import com.game.bankline.exceptions.RequiredFieldsException;
@@ -44,7 +44,7 @@ public class UsuarioService {
             throw new DuplicateKeyException("Login "+usuario.getLogin()+" ja utilizado");
             
         } else {
-        	usuario.setSenha(passwordEncoder.encode(""));
+        	usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         	Usuario usuarioCriado = usuarioRepository.save(usuario);
         	novoUsuario.setLogin(usuarioCriado.getLogin());
         	novoUsuario.setNome(usuarioCriado.getNome());
