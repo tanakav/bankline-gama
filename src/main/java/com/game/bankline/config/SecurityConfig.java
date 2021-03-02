@@ -17,6 +17,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.game.bankline.security.JwtAuthenticationFilter;
+import com.game.bankline.security.JwtAuthorizationFilter;
 import com.game.bankline.security.JwtUtil;
 
 @Configuration
@@ -53,6 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.anyRequest().authenticated();
 		
 		http.addFilter(new JwtAuthenticationFilter(authenticationManager(),jwtUtil));
+		http.addFilter(new JwtAuthorizationFilter(authenticationManager(),jwtUtil,userDetailsService));
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 	
