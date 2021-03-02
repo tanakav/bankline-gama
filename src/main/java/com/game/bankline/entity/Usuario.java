@@ -21,11 +21,8 @@ public class Usuario{
 	private String nome;
 	
 	@NotNull
-<<<<<<< Upstream, based on origin/master
-	@Size(max=20)
-=======
+	
 	@Size(min = 6, max = 20)
->>>>>>> 8116283 Troca anotation @MAX por @Size, que valida quantidade de caracteres no
 	private String login;
 	
 	@NotNull
