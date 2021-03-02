@@ -1,11 +1,20 @@
 package com.game.bankline.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.game.bankline.entity.enums.TipoPerfil;
 
 @Entity
 public class Usuario{
@@ -27,7 +36,13 @@ public class Usuario{
 	@NotNull
 	private String senha;
 	
-	public Usuario() {}	
+	@ElementCollection(fetch=FetchType.EAGER)
+	@CollectionTable(name="PERFIS")
+	private Set<Integer> perfis = new HashSet<>();
+	
+	public Usuario() {
+		addPerfil(TipoPerfil.USUARIO);
+	}	
 
 	public Usuario(Integer id, String cpf, String nome, String login, String senha) {
 		super();
@@ -76,6 +91,16 @@ public class Usuario{
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+	
+	public Set<TipoPerfil> getPerfis(){
+		return perfis.stream()
+				.map(perfil -> TipoPerfil.toEnum(perfil))
+				.collect(Collectors.toSet());
+	}
+	
+	public void addPerfil(TipoPerfil perfil) {
+		perfis.add(perfil.getId());
 	}
 
 	@Override
