@@ -2,26 +2,29 @@ package com.game.bankline.dto;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class LancamentoDto {
 	
 	private Integer conta;
 	
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date data;
 	
 	private String descricao;
 
-	private Integer tipoPlanoConta;
+	private Integer planoConta;
 	
 	private Double valor;
 	
 	public LancamentoDto() {}
 
-	public LancamentoDto(Integer conta, Date data, String descricao, Integer tipoPlanoConta, Double valor) {
+	public LancamentoDto(Integer conta, Date data, String descricao, Integer planoConta, Double valor) {
 		super();
 		this.conta = conta;
 		this.data = data;
 		this.descricao = descricao;
-		this.tipoPlanoConta = tipoPlanoConta;
+		this.planoConta = planoConta;
 		this.valor = valor;
 	}
 
@@ -49,12 +52,12 @@ public class LancamentoDto {
 		this.descricao = descricao;
 	}
 
-	public Integer getTipoPlanoConta() {
-		return tipoPlanoConta;
+	public Integer getPlanoConta() {
+		return planoConta;
 	}
 
-	public void setTipoPlanoConta(Integer tipo) {
-		this.tipoPlanoConta = tipo;
+	public void setPlanoConta(Integer planoConta) {
+		this.planoConta = planoConta;
 	}
 
 	public Double getValor() {

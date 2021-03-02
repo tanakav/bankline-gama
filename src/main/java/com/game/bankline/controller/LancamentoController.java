@@ -37,12 +37,11 @@ public class LancamentoController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<String> salvarLancamento(LancamentoDto lancamentoRequest){
+	public ResponseEntity<Lancamento> salvarLancamento(@RequestBody LancamentoDto lancamentoRequest){
 		
-		lancamentoService.salvarLancamento(lancamentoRequest);
+		Lancamento lancamento = lancamentoService.salvarLancamento(lancamentoRequest);
 		
-		return ResponseEntity.status(201).body("Lancamento efetuado com sucesso");
-		
+		return ResponseEntity.status(201).body(lancamento);		
 	}
 	
 	@PostMapping("/planos-conta")
