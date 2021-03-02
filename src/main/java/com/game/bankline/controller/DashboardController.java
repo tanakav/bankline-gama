@@ -3,6 +3,7 @@ package com.game.bankline.controller;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,9 +22,9 @@ public class DashboardController {
 	
 	@GetMapping
 	public ResponseEntity<DashboardDto> getDashboard(
-			@RequestParam(required=true) String numeroDaConta,
-			@RequestParam(required=true) Date dataInicial,
-			@RequestParam(required=true) Date dataFinal) {
+			@RequestParam(required=true, name="login") String numeroDaConta,
+			@RequestParam(required=true) @DateTimeFormat(pattern = "yyyy-MM-dd") Date dataInicial,
+			@RequestParam(required=true) @DateTimeFormat(pattern = "yyyy-MM-dd") Date dataFinal) {
 		DashboardDto responseData = new DashboardDto();
 		
 		responseData = dashboardService.getLancamentosDaConta(numeroDaConta, dataInicial, dataFinal);

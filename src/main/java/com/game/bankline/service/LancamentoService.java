@@ -7,7 +7,6 @@ import com.game.bankline.dto.LancamentoDto;
 import com.game.bankline.entity.Lancamento;
 import com.game.bankline.entity.PlanoConta;
 import com.game.bankline.exceptions.ObjectNotFoundException;
-import com.game.bankline.repository.ContaRepository;
 import com.game.bankline.repository.LancamentoRepository;
 import com.game.bankline.repository.PlanoContaRepository;
 
@@ -18,24 +17,20 @@ public class LancamentoService {
 	private LancamentoRepository lancamentoRepository;
 	
 	@Autowired
-	private ContaRepository contaRepository;
-	
-	@Autowired
 	private PlanoContaRepository planoContaRepository;
 	
-	public void salvarLancamento(LancamentoDto lancamentoRequest) {
+	public Lancamento salvarLancamento(LancamentoDto lancamentoRequest) {
 		Lancamento lancamento = new Lancamento();
 		
 		lancamento.setConta(lancamentoRequest.getConta());
 		lancamento.setData(lancamentoRequest.getData());
 		lancamento.setDescricao(lancamentoRequest.getDescricao());
-		PlanoConta planoConta = getPlanoConta(lancamentoRequest.getTipoPlanoConta());
+		PlanoConta planoConta = getPlanoConta(lancamentoRequest.getPlanoConta());
 		lancamento.setPlanoConta(planoConta);
 		lancamento.setTipo(planoConta.getTipoMovimento());
 		lancamento.setValor(lancamentoRequest.getValor());
 		
-		lancamentoRepository.save(lancamento);	
-
+		return lancamentoRepository.save(lancamento);	
 	}
 	
 	private PlanoConta getPlanoConta(Integer id) {
