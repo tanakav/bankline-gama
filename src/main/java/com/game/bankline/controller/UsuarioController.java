@@ -19,7 +19,6 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/usuarios")
-@CrossOrigin(origins="*")
 @Api(value="Usuario API REST")
 public class UsuarioController {
 	
