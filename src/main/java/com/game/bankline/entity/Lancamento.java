@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.game.bankline.entity.enums.TipoMovimento;
 
 @Entity
@@ -22,6 +23,7 @@ public class Lancamento {
 	
 	private Integer conta;
 	
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date data;
 	
 	private String descricao;
