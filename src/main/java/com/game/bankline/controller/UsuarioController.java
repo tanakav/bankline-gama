@@ -1,6 +1,5 @@
 package com.game.bankline.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,9 +54,6 @@ public class UsuarioController {
 	
 	@GetMapping("/contas/{login}")
 	public ResponseEntity<List<Conta>> buscarTodasContas(@PathVariable String login){
-		List<Conta> contas = new ArrayList<>();
-		
-		contas = contaService.buscarTodasContas(login);
 		
 		return ResponseEntity.ok().body(contaService.buscarTodasContas(login));
 	}

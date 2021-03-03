@@ -27,7 +27,7 @@ public class DashboardService {
 	public DashboardDto getLancamentosDaConta(String numeroDaConta, Date dataInicial, Date dataFinal) {
 		DashboardDto dashboardDto = new DashboardDto();
 		
-		if(contaRepository.findAllByNumero(numeroDaConta).isEmpty()) {
+		if(contaRepository.findByNumero(numeroDaConta).isEmpty()) {
 			
 			throw new ObjectNotFoundException("Conta de numero "+numeroDaConta+" nao encontrada");			
 			
