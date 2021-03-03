@@ -11,6 +11,8 @@ public interface ContaRepository extends JpaRepository<Conta, Integer>{
 	
 	Optional<Conta> findByNumeroAndTipoConta(String numeroDaConta, Integer tipoMovimento);
 	
-	List<Conta> findAllByNumero(String numeroDaConta);	
+	List<Conta> findAllByNumero(String numeroDaConta);
+	
+	Optional<Conta> getFirstByNumero(String login);
 
 }
