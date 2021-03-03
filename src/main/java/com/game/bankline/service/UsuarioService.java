@@ -1,19 +1,21 @@
 package com.game.bankline.service;
 
 import java.util.Arrays;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.game.bankline.dto.UsuarioDto;
 import com.game.bankline.entity.Conta;
+import com.game.bankline.entity.PlanoConta;
 import com.game.bankline.entity.Usuario;
 import com.game.bankline.entity.enums.TipoConta;
+import com.game.bankline.entity.enums.TipoMovimento;
 import com.game.bankline.exceptions.DuplicateKeyException;
 import com.game.bankline.exceptions.ObjectNotFoundException;
 import com.game.bankline.exceptions.RequiredFieldsException;
 import com.game.bankline.repository.ContaRepository;
+import com.game.bankline.repository.PlanoContaRepository;
 import com.game.bankline.repository.UsuarioRepository;
 
 @Service
@@ -27,6 +29,9 @@ public class UsuarioService {
 	
 	@Autowired
 	private ContaRepository contaRepository;
+	
+	@Autowired
+	private PlanoContaRepository planoContaRepository;
 	
 	public UsuarioDto createUsuario(Usuario usuario) {
 		UsuarioDto novoUsuario = new UsuarioDto();
@@ -52,7 +57,9 @@ public class UsuarioService {
         	Conta contaCredito = new Conta(null,"Conta Credito",usuario.getLogin(),0.0,TipoConta.CREDITO);
         	Conta contaDebito = new Conta(null,"Conta Debito",usuario.getLogin(),0.0,TipoConta.DEBITO);
         	
-        	contaRepository.saveAll(Arrays.asList(contaCredito,contaDebito));   	
+        	contaRepository.saveAll(Arrays.asList(contaCredito,contaDebito)); 
+        	
+        	criarPlanosContaPadrao(usuarioCriado.getLogin());
         	
         }	
 		
@@ -71,6 +78,16 @@ public class UsuarioService {
         }
 		
 		return usuarioBuscado;
+	}
+	
+	private void criarPlanosContaPadrao(String login){
+		
+		PlanoConta planoPadraoReceita = new PlanoConta(null,"RECEITA PADRAO",login,true,TipoMovimento.RECEITA.getId());
+		PlanoConta planoPadraoDespesa = new PlanoConta(null,"DESPESA PADRAO",login,true,TipoMovimento.DESPESA.getId());
+		PlanoConta planoPadraoTransferencia = new PlanoConta(null,"TRANSFERENCIA PADRAO",login,true,TipoMovimento.TRANSFERENCIA.getId());
+		
+		planoContaRepository.saveAll(Arrays.asList(planoPadraoReceita,planoPadraoDespesa,planoPadraoTransferencia));
+
 	}
 
 }
