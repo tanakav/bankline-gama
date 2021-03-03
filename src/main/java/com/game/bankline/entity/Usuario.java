@@ -21,7 +21,8 @@ public class Usuario{
 	private String nome;
 	
 	@NotNull
-	@Size(max=20)
+	
+	@Size(min = 6, max = 20)
 	private String login;
 	
 	@NotNull

@@ -12,6 +12,8 @@ public class LancamentoDto {
 	private Date data;
 	
 	private String descricao;
+	
+	private String contaDestino;
 
 	private Integer planoConta;
 	
@@ -26,6 +28,25 @@ public class LancamentoDto {
 		this.descricao = descricao;
 		this.planoConta = planoConta;
 		this.valor = valor;
+	}
+	
+	public LancamentoDto(Integer conta, Date data,String contaDestino, String descricao, Integer planoConta, Double valor) {
+		super();
+		this.conta = conta;
+		this.data = data;
+		this.descricao = descricao;
+		this.planoConta = planoConta;
+		this.valor = valor;
+	}
+	
+	
+
+	public String getContaDestino() {
+		return contaDestino;
+	}
+
+	public void setContaDestino(String contaDestino) {
+		this.contaDestino = contaDestino;
 	}
 
 	public Integer getConta() {
