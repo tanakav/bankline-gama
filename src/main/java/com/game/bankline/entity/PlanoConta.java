@@ -25,6 +25,16 @@ public class PlanoConta {
 	
 	private Integer tipoMovimento;
 	
+	public PlanoConta() {}	
+
+	public PlanoConta(Integer id, String descricao, String login, boolean padrao, Integer tipoMovimento) {
+		super();
+		this.id = id;
+		this.descricao = descricao;
+		this.login = login;
+		this.padrao = padrao;
+		this.tipoMovimento = tipoMovimento;
+	}
 
 	public Integer getId() {
 		return id;

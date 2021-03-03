@@ -1,5 +1,7 @@
 package com.game.bankline.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,10 @@ public class ContaService {
 	
 	public Conta criarConta(Conta conta) {
 		return contaRepository.save(conta);
+	}
+	
+	public List<Conta> buscarTodasContas(String login){
+		return contaRepository.findByNumero(login);
 	}
 	
 	public Conta creditarLancamentoNaConta( Conta conta, Double valorTransferencia) {		
