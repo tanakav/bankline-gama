@@ -13,58 +13,70 @@ A documentação da API pode ser acessada em  [https://bankline-gamaacademy.hero
 ## Endpoints
 
 ### Usuário
-- Criação de novo usuario. Ao criar um novo usuário é criado automatomaticamente duas contas (conta de débito e conta de crédito) e três planos de conta padrão (DESPESA PADRÃO, RECEITA PADRÃO e TRANSFERENCIA PADRÃO)
-`POST /usuarios`
-	- Paramêtros do body em JSON:
-			- nome: String
-			- login: String
-			- cpf: String
-			- senha: String
-			
-- Busca de usuário por id 
-`GET /usuarios/{id}`
-	- Parâmetro de caminho (PathVariable):
-			- id: Integer
+#### 1. Criação de novo usuario
+**`POST /usuarios`**
 
-- Busca de contas por login de usuário 
-`GET /usuarios/contas/{login}`
-	- Parâmetro de caminho (PathVariable):
-			- login: String
+Ao criar um novo usuário é criado automatomaticamente duas contas (conta de débito e conta de crédito) e três planos de conta padrão (DESPESA PADRÃO, RECEITA PADRÃO e TRANSFERENCIA PADRÃO).
+
+Paramêtros do body em JSON:
+- nome: String
+- login: String
+- cpf: String
+- senha: String
+			
+#### 2. Busca de usuário por id 
+**`GET /usuarios/{id}`**
+
+Parâmetro de caminho (PathVariable):
+- id: Integer
+
+#### 3. Busca de contas por login de usuário 
+**`GET /usuarios/contas/{login}`**
+
+Parâmetro de caminho (PathVariable):
+- login: String
 
 ### Lançamentos
-- Criação de novo lançamento. Ao criar um novo lançamento, o saldo da(s) conta(s) envolvida(s) são atualizadas para refletir o tipo movimento do lançamento
-`POST /lancamentos`
-	- Parâmetros do body JSON:
-			- data: Date em formato yyyy-MM-dd
-			- conta: Integer
-			- descricao: String
-			- planoConta: Integer
-			- valor: Double
+#### 1. Criação de novo lançamento
+**`POST /lancamentos`**
 
-- Criação de novo plano de conta 
-`POST /lancamentos/planos-conta`
-	- Parâmetros do body JSON:
-			- descricao: String
-			- login: String
-			- padrao: Boolean
-			- tipoMovimento: Integer
+Ao criar um novo lançamento, o saldo da(s) conta(s) envolvida(s) são atualizadas para refletir o tipo movimento do lançamento.
+Parâmetros do body JSON:
+- data: Date em formato yyyy-MM-dd
+- conta: Integer
+- descricao: String
+- planoConta: Integer
+- valor: Double
 
-- Busca de planos de conta por login de usuário 
-`GET /lancamentos/planos-conta/{login}`
-	- Parâmetro de caminho (PathVariable):
-			- login: String
+#### 2. Criação de novo plano de conta 
+**`POST /lancamentos/planos-conta`**
+
+Parâmetros do body JSON:
+- descricao: String
+- login: String
+- padrao: Boolean
+- tipoMovimento: Integer
+
+#### 3. Busca de planos de conta por login de usuário 
+**`GET /lancamentos/planos-conta/{login}`**
+
+Parâmetro de caminho (PathVariable):
+- login: String
 
 ### Dashboard
-- Relação de lançamentos por conta por período. É obrigatório informar o período e login 
+#### 1. Relação de lançamentos por conta por período 
 `GET /dashboard?login={login}&dataInicial={dataInicial}&dataFinal={dataFinal}`
-	- Parâmetros de query (RequestParam):
-			- login: String
-			- dataInicial: Data em String em formato yyyy-MM-dd
-			- dataFinal: Data em String em formato yyyy-MM-dd
+
+É obrigatório informar o período e login.
+Parâmetros de query (RequestParam):
+- login: String
+- dataInicial: Data em String em formato yyyy-MM-dd
+- dataFinal: Data em String em formato yyyy-MM-dd
 
 ### Login
-- Autenticação e geração de token JWT 
+#### 1. Autenticação e geração de token JWT 
 `POST /login`
-	- Parâmetros do body JSON:
-			- login: String
-			- senha: String
+
+Parâmetros do body JSON:
+- login: String
+- senha: String
