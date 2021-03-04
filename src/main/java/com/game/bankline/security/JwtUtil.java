@@ -16,9 +16,13 @@ public class JwtUtil {
 	private String secret;
 	
 	@Value("${jwt.expiration}")
-	private Long expiration;
+	private Long expiration;	
 	
-	public String generateToke(String login) {
+	public Long getExpiration() {
+		return expiration;
+	}
+
+	public String generateToken(String login) {
 		return Jwts.builder()
 				.setSubject(login)
 				.setExpiration(new Date(System.currentTimeMillis() + expiration))

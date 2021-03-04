@@ -1,25 +1,23 @@
 package com.game.bankline.controller;
 
-import com.game.bankline.dto.CredenciaisDto;
-import com.game.bankline.dto.UsuarioDto;
-import com.game.bankline.entity.Conta;
-import com.game.bankline.entity.Usuario;
-import com.game.bankline.exceptions.SenhaInvalidaException;
-import com.game.bankline.security.JwtUtil;
-import com.game.bankline.service.ContaService;
-import com.game.bankline.service.UserDetailsServiceImpl;
-import com.game.bankline.service.UsuarioService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
+import com.game.bankline.dto.CredenciaisDto;
+import com.game.bankline.dto.SessaoDto;
+import com.game.bankline.entity.Usuario;
+import com.game.bankline.exceptions.SenhaInvalidaException;
+import com.game.bankline.service.ContaService;
+import com.game.bankline.service.UsuarioService;
+
+import io.swagger.annotations.Api;
 
 @RestController
 @RequestMapping("/")
@@ -33,15 +31,11 @@ public class SessionController {
     private ContaService contaService;
 
     @PostMapping("/login")
-    public ResponseEntity<String> autenticar(@RequestBody CredenciaisDto credenciais) {
+    public ResponseEntity<SessaoDto> autenticar(@RequestBody CredenciaisDto credenciais) {
         try {
-            Usuario usuario = new Usuario();
-            usuario.setLogin(credenciais.getLogin());
-            usuario.setSenha(credenciais.getSenha());
+        	SessaoDto sessao =  usuarioService.autenticar(credenciais);
 
-            String token = "Bearer" + usuarioService.autenticar(usuario);
-
-            return ResponseEntity.ok().body(token);
+            return ResponseEntity.ok().body(sessao);
 
         } catch (UsernameNotFoundException | SenhaInvalidaException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());

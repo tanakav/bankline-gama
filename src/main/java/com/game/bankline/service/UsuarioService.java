@@ -1,16 +1,14 @@
 package com.game.bankline.service;
 
 import java.util.Arrays;
+import java.util.Date;
 
-import com.game.bankline.dto.CredenciaisDto;
-import com.game.bankline.exceptions.SenhaInvalidaException;
-import com.game.bankline.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.game.bankline.dto.CredenciaisDto;
+import com.game.bankline.dto.SessaoDto;
 import com.game.bankline.dto.UsuarioDto;
 import com.game.bankline.entity.Conta;
 import com.game.bankline.entity.PlanoConta;
@@ -20,9 +18,11 @@ import com.game.bankline.entity.enums.TipoMovimento;
 import com.game.bankline.exceptions.DuplicateKeyException;
 import com.game.bankline.exceptions.ObjectNotFoundException;
 import com.game.bankline.exceptions.RequiredFieldsException;
+import com.game.bankline.exceptions.SenhaInvalidaException;
 import com.game.bankline.repository.ContaRepository;
 import com.game.bankline.repository.PlanoContaRepository;
 import com.game.bankline.repository.UsuarioRepository;
+import com.game.bankline.security.JwtUtil;
 
 @Service
 public class UsuarioService {
@@ -113,13 +113,26 @@ public class UsuarioService {
 	}
 
 
-	public String autenticar(Usuario usuario ){
-		UserDetails user = userDetailsService.loadUserByUsername(usuario.getLogin());
-		boolean senhasBatem = passwordEncoder.matches( usuario.getSenha(), user.getPassword() );
-
-
-		if(senhasBatem){
-			return jwtUtil.generateToke(usuario.getLogin());
+	public SessaoDto autenticar(CredenciaisDto credenciais){
+		if(credenciais.getLogin() == null || credenciais.getSenha() == null) {
+			throw new RequiredFieldsException("Por favor preencher login e senha");
+		}
+		
+		if(!usuarioRepository.findByLogin(credenciais.getLogin()).isPresent()) {
+			throw new ObjectNotFoundException("Usuario de login "+credenciais.getLogin()+" nao encontrado");
+		}
+		
+		Usuario usuario = usuarioRepository.findByLogin(credenciais.getLogin()).get();
+		
+		if(passwordEncoder.matches(credenciais.getSenha(), usuario.getSenha())) {
+			SessaoDto sessao = new SessaoDto();
+			
+			sessao.setUsuario(usuario);
+			sessao.setToken("Bearer "+jwtUtil.generateToken(credenciais.getLogin()));
+			sessao.setDataInicio(new Date(System.currentTimeMillis()));
+			sessao.setDataFim(new Date(System.currentTimeMillis() + jwtUtil.getExpiration()));
+			
+			return sessao;
 		}
 
 		throw new SenhaInvalidaException();
