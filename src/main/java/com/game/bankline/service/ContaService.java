@@ -1,11 +1,13 @@
 package com.game.bankline.service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.game.bankline.entity.Conta;
+import com.game.bankline.exceptions.ObjectNotFoundException;
 import com.game.bankline.repository.ContaRepository;
 
 @Service
@@ -35,11 +37,24 @@ public class ContaService {
 	}
 	
 	public Conta getContaById(Integer id) {
-		return contaRepository.findById(id).get();
+		Conta conta = new Conta();
+		try {
+			conta = contaRepository.findById(id).get();
+		}catch(NoSuchElementException e) {
+			throw new ObjectNotFoundException("Conta com id "+id+" existe!");
+		}
+		return conta;
 	}
 	
 	public Conta getContaByLogin(String login) {
-		return contaRepository.getFirstByNumero(login).get();
+		Conta conta = new Conta();
+		try {
+			conta = contaRepository.getFirstByNumero(login).get();
+		}catch(NoSuchElementException e) {
+			throw new ObjectNotFoundException("Conta do login "+login+" nao encontrada!");
+		}
+		
+		return conta;
 	}
 
 	public void realizarTransferenciaEntreContas(Conta contaOrigem, Conta contaDestino ,Double valor) {
