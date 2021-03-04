@@ -10,6 +10,8 @@ A documentação da API pode ser acessada em  [https://bankline-gamaacademy.hero
 -   **[Murilo Sérgio Rodrigues Júnior](https://github.com/murilosrj1990)**:  Realizou a construção da estrutura inicial com entidades, controllers e repositories, a codificação da parte relacionada a Lançamentos, configuração do Swagger e deploy no Heroku.
 -   **[Vivian Tanaka](https://github.com/tanakav)**:  Realizou a codificação das partes relacionadas ao Usuário, Contas, Dashboard, ajustes em Lançamentos e Segurança Spring Security e JWT.
 -   **[William Silva de Jesus](https://github.com/WilliamJesusDev)**:  Realizou ajustes Segurança Spring Security e JWT e implementação da funcionalidade de troca de senha.
+-   **[Iago Gomes](https://github.com/iagoomes)**
+-   **[Jonathan Gibim](https://github.com/JonathanGibim)**
 
 ## Endpoints
 
