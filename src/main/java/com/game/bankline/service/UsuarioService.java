@@ -1,7 +1,13 @@
 package com.game.bankline.service;
 
 import java.util.Arrays;
+
+import com.game.bankline.dto.CredenciaisDto;
+import com.game.bankline.exceptions.SenhaInvalidaException;
+import com.game.bankline.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,12 +26,17 @@ import com.game.bankline.repository.UsuarioRepository;
 
 @Service
 public class UsuarioService {
+	@Autowired
+	private JwtUtil jwtUtil;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+	private UserDetailsServiceImpl userDetailsService;
 	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
-	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
 	
 	@Autowired
 	private ContaRepository contaRepository;
@@ -79,6 +90,17 @@ public class UsuarioService {
 		
 		return usuarioBuscado;
 	}
+
+	public void changePassword(CredenciaisDto credenciais){
+		Usuario usuario = usuarioRepository.findByLogin(credenciais.getLogin()).get();
+
+		if(usuarioRepository.findByLogin(credenciais.getLogin()).isPresent()){
+			usuario.setSenha(passwordEncoder.encode(credenciais.getSenha()));
+			usuarioRepository.save(usuario);
+		}else{
+			throw new ObjectNotFoundException("Usuario de login: "+credenciais.getLogin()+" nao encontrado");
+		}
+	}
 	
 	private void criarPlanosContaPadrao(String login){
 		
@@ -88,6 +110,19 @@ public class UsuarioService {
 		
 		planoContaRepository.saveAll(Arrays.asList(planoPadraoReceita,planoPadraoDespesa,planoPadraoTransferencia));
 
+	}
+
+
+	public String autenticar(Usuario usuario ){
+		UserDetails user = userDetailsService.loadUserByUsername(usuario.getLogin());
+		boolean senhasBatem = passwordEncoder.matches( usuario.getSenha(), user.getPassword() );
+
+
+		if(senhasBatem){
+			return jwtUtil.generateToke(usuario.getLogin());
+		}
+
+		throw new SenhaInvalidaException();
 	}
 
 }
