@@ -1,5 +1,7 @@
 package com.game.bankline.service;
 
+import java.util.NoSuchElementException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,6 +10,7 @@ import com.game.bankline.entity.Lancamento;
 import com.game.bankline.entity.PlanoConta;
 import com.game.bankline.entity.enums.TipoMovimento;
 import com.game.bankline.exceptions.ObjectNotFoundException;
+import com.game.bankline.exceptions.RequiredFieldsException;
 import com.game.bankline.repository.ContaRepository;
 import com.game.bankline.repository.LancamentoRepository;
 import com.game.bankline.repository.PlanoContaRepository;
@@ -24,6 +27,10 @@ public class LancamentoService {
 	private ContaService contaService;
 	
 	public Lancamento salvarLancamento(LancamentoDto lancamentoRequest) {
+		
+		if(lancamentoRequest.getConta()==null || lancamentoRequest.getData() ==null || lancamentoRequest.getPlanoConta()==null || lancamentoRequest.getValor()==null) {
+			throw new RequiredFieldsException("Campos obrigatórios não foram preenchidos!");
+		}
 		Lancamento lancamento = new Lancamento();
 				
 		lancamento.setConta(lancamentoRequest.getConta());
@@ -41,7 +48,9 @@ public class LancamentoService {
 		}else if(planoConta.getTipoMovimento().equals(TipoMovimento.DESPESA)) {
 			contaService.debitarLancamentoDaConta(contaService.getContaById(lancamentoRequest.getConta()),lancamentoRequest.getValor());
 		}else if(planoConta.getTipoMovimento().equals(TipoMovimento.TRANSFERENCIA)) {
-			
+			if(lancamentoRequest.getContaDestino()==null) {
+				throw new RequiredFieldsException("Conta de destino da transferência não foi especificado!");
+			}
 			contaService.realizarTransferenciaEntreContas(
 					contaService.getContaById(lancamentoRequest.getConta()),
 					contaService.getContaByLogin(lancamentoRequest.getContaDestino()),
@@ -55,15 +64,14 @@ public class LancamentoService {
 	
 	private PlanoConta getPlanoConta(Integer id) {
 		PlanoConta planoConta = new PlanoConta();
-		
-		if(planoContaRepository.findById(id).isPresent()) {
-			planoConta = planoContaRepository.findById(id).get();
-		}else {
+		try {			
+				planoConta = planoContaRepository.findById(id).get();
+					
+		}catch(NoSuchElementException e) {
 			throw new ObjectNotFoundException("Plano Conta de id "+id+" nao encontrado");
 		}
 		
-		return planoConta;
-		
+		return planoConta;		
 	}
 	
 }
