@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.game.bankline.dto.LancamentoDto;
 import com.game.bankline.entity.Lancamento;
 import com.game.bankline.entity.PlanoConta;
-import com.game.bankline.repository.LancamentoRepository;
 import com.game.bankline.repository.PlanoContaRepository;
 import com.game.bankline.service.LancamentoService;
 
@@ -23,18 +22,10 @@ import com.game.bankline.service.LancamentoService;
 public class LancamentoController {
 	
 	@Autowired
-	private LancamentoRepository lancamentoRepository;
-	
-	@Autowired
 	private LancamentoService lancamentoService;
 	
 	@Autowired
 	private PlanoContaRepository planoContaRepository;
-	
-	@GetMapping()
-	public List<Lancamento> listarLancamentos(){
-		return  lancamentoRepository.findAll();
-	}
 	
 	@PostMapping
 	public ResponseEntity<Lancamento> salvarLancamento(@RequestBody LancamentoDto lancamentoRequest){

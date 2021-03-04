@@ -22,12 +22,12 @@ public class DashboardController {
 	
 	@GetMapping
 	public ResponseEntity<DashboardDto> getDashboard(
-			@RequestParam(required=true, name="login") String numeroDaConta,
+			@RequestParam(required=true, name="login") String login,
 			@RequestParam(required=true) @DateTimeFormat(pattern = "yyyy-MM-dd") Date dataInicial,
 			@RequestParam(required=true) @DateTimeFormat(pattern = "yyyy-MM-dd") Date dataFinal) {
 		DashboardDto responseData = new DashboardDto();
 		
-		responseData = dashboardService.getLancamentosDaConta(numeroDaConta, dataInicial, dataFinal);
+		responseData = dashboardService.getLancamentosDaConta(login, dataInicial, dataFinal);
 		
 		return ResponseEntity.ok().body(responseData);
 	}
